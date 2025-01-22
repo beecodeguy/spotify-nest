@@ -3,6 +3,14 @@ GET http://localhost:3000/songs
 
 ### POST Single Song
 POST http://localhost:3000/songs
+Content-Type: application/json
+
+{
+    "title": "Animal by Luther",
+    "artist": ["Beecode"],
+    "releasedDate": "2024-01-10",
+    "duration": "04:00"
+    }
 
 ### GET Single Song
 GET http://localhost:3000/songs/1

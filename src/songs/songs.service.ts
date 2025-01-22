@@ -11,7 +11,7 @@ export class SongsService {
 
   private readonly songs: Song[] = [] as Song[];
 
-  create(song: Song): Song[] {
+  create(song): Song[] {
     // save song in DB
     this.songs.push(song);
     return this.songs;
