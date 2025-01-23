@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto copy';
 
 @Injectable()
 export class UsersService {
@@ -47,37 +49,29 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return this.users.find((user) => user.id === id);
+    const user = this.users.find((user) => user.id === id);
+    if (!user) throw new NotFoundException('User not Found');
+    return user;
   }
 
-  create(user: {
-    name: string;
-    email: string;
-    role: 'intern' | 'engineer' | 'admin';
-  }) {
+  create(createUserDTO: CreateUserDTO) {
     const userByHighestId = [...this.users].sort((a, b) => b.id - a.id);
     const newUser = {
       id: userByHighestId[0].id + 1,
-      ...user,
+      ...createUserDTO,
     };
     this.users.push(newUser);
     return newUser;
   }
 
-  update(
-    id: number,
-    updatedUser: {
-      name?: string;
-      email?: string;
-      role?: 'intern' | 'engineer' | 'admin';
-    },
-  ) {
+  update(id: number, updateUserDTO: UpdateUserDTO) {
     this.users = this.users.map((user) => {
       if (user.id === id) {
-        return { ...user, ...updatedUser };
+        return { ...user, ...updateUserDTO };
       }
       return user;
     });
+    console.log(this.findOne(id));
     return this.findOne(id);
   }
 
