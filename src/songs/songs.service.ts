@@ -18,6 +18,10 @@ export class SongsService {
   }
   findAll() {
     // Fetch from DB
+
+    //Let us say we get error getting songs from DB
+    // And we did not added error handle logic
+    throw new Error('Error in DB while fetching Data');
     return this.songs;
   }
 }

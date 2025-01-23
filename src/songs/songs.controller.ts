@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { Song } from './songs.service';
 import { SongsService } from './songs.service';
 import { CreateSongDTO } from './dto/create-new-song-dto';
@@ -12,11 +23,21 @@ export class SongsController {
   }
   @Get()
   findAll(): Song[] {
-    return this.songsService.findAll();
+    try {
+      return this.songsService.findAll();
+    } catch {
+      throw new HttpException('server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
   @Get(':id')
-  findOne() {
-    return 'Fetch Song based on id';
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ) {
+    return `Fetch Song based on id ${typeof id}`;
   }
 
   @Put(':id')
