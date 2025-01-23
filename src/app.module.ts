@@ -5,9 +5,11 @@ import { SongsModule } from './songs/songs.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { SongsController } from './songs/songs.controller';
 import { UsersModule } from './users/users.module';
+import { DatabaseModule } from './database/database.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
-  imports: [SongsModule, UsersModule],
+  imports: [SongsModule, UsersModule, DatabaseModule, EmployeesModule],
   controllers: [AppController],
   providers: [AppService],
 })
