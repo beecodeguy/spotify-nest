@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { SongsModule } from './songs/songs.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { SongsController } from './songs/songs.controller';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [SongsModule],
+  imports: [SongsModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
